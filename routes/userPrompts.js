@@ -1,5 +1,4 @@
 const { dbConnection } = require("../config/connect");
-
 const userPrompts = [
   {
     message: "What would you like to do?\n",
@@ -48,6 +47,7 @@ const userPrompts = [
         });
       } catch (error) {
         console.error(error);
+        return [];
       }
     },
     name: "roleDepartment",
@@ -78,6 +78,7 @@ const userPrompts = [
         });
       } catch (error) {
         console.error(error);
+        return [];
       }
     },
     name: "employeeRole",
@@ -94,11 +95,11 @@ const userPrompts = [
         const choices = rows.map((manager) => {
           return { name: manager.managerName, value: manager.manager_id };
         });
-        choices.push({ name: "N/A", value: null }); // Allow selecting "N/A" as a manager
+        choices.push({ name: "N/A", value: null });
         return choices;
       } catch (error) {
         console.error(error);
-        return []; // Return an empty array in case of an error to prevent a null reference
+        return [];
       }
     },
     name: "employeeManager",
@@ -117,7 +118,7 @@ const userPrompts = [
         });
       } catch (error) {
         console.error(error);
-        return []; // Return an empty array in case of an error to prevent a null reference
+        return [];
       }
     },
     name: "employeeToUpdate",
@@ -136,7 +137,7 @@ const userPrompts = [
         });
       } catch (error) {
         console.error(error);
-        return []; // Return an empty array in case of an error to prevent a null reference
+        return [];
       }
     },
     name: "newRole",

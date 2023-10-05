@@ -1,4 +1,4 @@
-const { dbConnection } = require("../config/connect");
+const { pool } = require("../config/connect");
 
 // Function to retrieve employee data from the database
 async function fetchEmployeeData() {
@@ -9,7 +9,7 @@ async function fetchEmployeeData() {
   LEFT JOIN employees m ON e.manager_id = m.id;`;
 
   try {
-    const [rows, fields] = await dbConnection.promise().query(query);
+    const [rows, fields] = await pool.query(query);
     return console.table(rows);
   } catch (error) {
     console.error(error);
@@ -21,7 +21,7 @@ async function insertEmployee(data) {
   const query = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
 
   try {
-    const [rows, fields] = await dbConnection.promise().query(query, data);
+    const [rows, fields] = await pool.query(query, data);
     return console.log(`\nAdded employee ${data[0]} ${data[1]} to the database.\n`);
   } catch (error) {
     console.error(error);
@@ -33,7 +33,7 @@ async function fetchDepartments() {
   const query = `SELECT * FROM departments`;
 
   try {
-    const [rows, fields] = await dbConnection.promise().query(query);
+    const [rows, fields] = await pool.query(query);
     return console.table(rows);
   } catch (error) {
     console.error(error);
@@ -45,7 +45,7 @@ async function insertDepartment(name) {
   const query = `INSERT INTO departments (dept_name) VALUES (?)`;
 
   try {
-    const [rows, fields] = await dbConnection.promise().query(query, name);
+    const [rows, fields] = await pool.query(query, [name]);
     return console.log(`\nAdded department ${name} to the database.\n`);
   } catch (error) {
     console.error(error);
@@ -58,7 +58,7 @@ async function fetchRoles() {
   JOIN departments d ON r.department_id = d.id;`;
 
   try {
-    const [rows, fields] = await dbConnection.promise().query(query);
+    const [rows, fields] = await pool.query(query);
     return console.table(rows);
   } catch (error) {
     console.error(error);
@@ -70,7 +70,7 @@ async function insertRole(data) {
   const query = `INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)`;
 
   try {
-    const [rows, fields] = await dbConnection.promise().query(query, data);
+    const [rows, fields] = await pool.query(query, data);
     return console.log(`\nAdded role ${data[0]} to the database.\n`);
   } catch (error) {
     console.error(error);
@@ -82,7 +82,7 @@ async function updateEmployeeRole(data) {
   const query = `UPDATE employees SET role_id = ? WHERE id = ?`;
 
   try {
-    const [rows, fields] = await dbConnection.promise().query(query, data);
+    const [rows, fields] = await pool.query(query, data);
     return console.log("\nEmployee role updated successfully!\n");
   } catch (error) {
     console.error(error);
