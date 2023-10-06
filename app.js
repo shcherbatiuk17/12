@@ -1,3 +1,4 @@
+const mysql = require("mysql2");
 const express = require("express");
 const { dbConnect } = require("./config/connect");
 const inquirer = require("inquirer");

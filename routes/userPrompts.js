@@ -39,7 +39,7 @@ const userPrompts = [
     type: "list",
     loop: false,
     choices: async function () {
-      const query = `SELECT dept_name, id FROM departments;`;
+      const query = `SELECT dept_name, id FROM department;`;
       try {
         const [rows, fields] = await dbConnection.promise().query(query);
         return rows.map((department) => {
@@ -70,7 +70,7 @@ const userPrompts = [
     type: "list",
     loop: false,
     choices: async function () {
-      const query = `SELECT id, title FROM roles;`;
+      const query = `SELECT id, title FROM role;`;
       try {
         const [rows, fields] = await dbConnection.promise().query(query);
         return rows.map((role) => {
@@ -89,7 +89,7 @@ const userPrompts = [
     type: "list",
     loop: false,
     choices: async function () {
-      const query = `SELECT DISTINCT e.manager_id, CONCAT(em.first_name," ", em.last_name) AS managerName FROM employees e JOIN employees em ON em.id = e.manager_id;`;
+      const query = `SELECT DISTINCT e.manager_id, CONCAT(em.first_name," ", em.last_name) AS managerName FROM employee e JOIN employee em ON em.id = e.manager_id;`;
       try {
         const [rows, fields] = await dbConnection.promise().query(query);
         const choices = rows.map((manager) => {
@@ -110,7 +110,7 @@ const userPrompts = [
     type: "list",
     loop: false,
     choices: async function () {
-      const query = `SELECT id, CONCAT(first_name," ", last_name) AS employeeName FROM employees;`;
+      const query = `SELECT id, CONCAT(first_name," ", last_name) AS employeeName FROM employee;`;
       try {
         const [rows, fields] = await dbConnection.promise().query(query);
         return rows.map((employee) => {
@@ -129,7 +129,7 @@ const userPrompts = [
     type: "list",
     loop: false,
     choices: async function () {
-      const query = `SELECT id, title FROM roles;`;
+      const query = `SELECT id, title FROM role;`;
       try {
         const [rows, fields] = await dbConnection.promise().query(query);
         return rows.map((role) => {
